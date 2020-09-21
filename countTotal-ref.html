@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <div>
+            <button-counter @change="handleChange" ref="btn1"></button-counter>
+            <button-counter @change="handleChange" ref="btn2"></button-counter>
+            <div>Total: {{total}}</div>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script type="text/javascript">
+        Vue.component('button-counter', {
+            data: function() {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button @click="handleBtnClick">{{count}}</button>',
+            methods: {
+                handleBtnClick: function() {
+                    this.count = this.count + 1;
+                    this.$emit('change');
+                }
+            }
+        });
+        
+        var vm = new Vue({
+            el: '#root',
+            methods: {
+                handleChange: function() {
+                    this.total = this.$refs.btn1.count + this.$refs.btn2.count;
+                }
+            },
+            data: {
+                total: 0
+            }
+        })
+    </script>
+</body>
+</html>
